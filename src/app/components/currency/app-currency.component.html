@@ -1,0 +1,25 @@
+<div class="header">
+  <div>
+    {{currencyData[1].rate}} => {{currencyData[1].cc}}
+  </div>
+  <div>
+    {{currencyData[2].rate}} => {{currencyData[2].cc}}
+  </div>
+</div>
+<div class="conversion">
+  <div class="conversion_body">
+    <div>
+      <input type="number" (keyup)="convertDataFirst()" [(ngModel)]="dataToConvert"/>
+      <select   [(ngModel)]="selectedCurrencyFirst" (ngModelChange)="convertDataFirst()"  >
+        <option  *ngFor="let currency of currencies" [ngValue]="currency">{{currency}}</option>
+      </select>
+    </div>
+
+    <div>
+      <input type="number"  (keyup)="convertDataSecond()" [(ngModel)]="convertedData"/>
+        <select   [(ngModel)]="selectedCurrencySecond" (ngModelChange)="convertDataSecond()"  >
+          <option *ngFor="let currency of currencies" [ngValue]="currency">{{currency}}</option>
+        </select>
+    </div>
+  </div>
+</div>
