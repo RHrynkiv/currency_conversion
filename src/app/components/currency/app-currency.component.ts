@@ -30,36 +30,37 @@ export class CurrencyComponent implements OnInit {
   }
 
   private filterData(data: ICurrency[]) {
-    this.currencyData = [{  cc: "UAH",
-      exchangedate: 'string',
-      r030: 1,
-      rate: 0.3,
-      txt: 1},...data.filter((val) => {
+    this.currencyData = data.filter((val) => {
       if (val.cc === 'USD' || val.cc === 'EUR' || val.cc === "UAH") {
+        console.log(val)
         return val;
 
       } else {
         return;
       }
-    })]
+    })
   }
 
 
-  onChange(city: any) {
-    console.log(city)
-  }
+
 
   convertDataFirst() {
     if (this.selectedCurrencyFirst === this.selectedCurrencySecond) {
       this.convertedData = this.dataToConvert
     } else {
       if (this.selectedCurrencyFirst === 'UAH' ) {
-        let currentCurrency = this.currencyData.filter(e => e.cc == this.selectedCurrencySecond) || 1
+        let currentCurrency = this.currencyData.filter(e => e.cc == this.selectedCurrencySecond)
+        console.log(currentCurrency)
         this.convertedData = Number((this.dataToConvert / currentCurrency[0].rate).toFixed(3).slice(0, -1))
       } else {
         let currentCurrency = this.currencyData.filter(e => e.cc == this.selectedCurrencySecond)
         let anotherCurrency = this.currencyData.filter(e => e.cc == this.selectedCurrencyFirst)
-        this.convertedData = Number((this.dataToConvert * (((this.dataToConvert * anotherCurrency[0].rate)/(this.dataToConvert * currentCurrency[0].rate)))).toFixed(3).slice(0, -1))
+        if (currentCurrency !=[]){
+          this.convertedData = Number((this.dataToConvert * anotherCurrency[0].rate).toFixed(3).slice(0, -1))
+        }
+        else{
+          this.convertedData = Number((this.dataToConvert * (((this.dataToConvert * anotherCurrency[0].rate)/(this.dataToConvert * currentCurrency[0].rate)))).toFixed(3).slice(0, -1))
+        }
       }
     }
   }
@@ -69,13 +70,19 @@ export class CurrencyComponent implements OnInit {
     } else {
       if (this.selectedCurrencySecond === 'UAH' ) {
         let currentCurrency = this.currencyData.filter(e => e.cc == this.selectedCurrencyFirst)
-        this.dataToConvert = Number((this.convertedData /currentCurrency[0].rate).toFixed(3).slice(0, -1))
+        console.log(currentCurrency)
+        this.dataToConvert = Number((this.convertedData / currentCurrency[0].rate).toFixed(3).slice(0, -1))
       } else {
         let currentCurrency = this.currencyData.filter(e => e.cc == this.selectedCurrencyFirst)
         let anotherCurrency = this.currencyData.filter(e => e.cc == this.selectedCurrencySecond)
-        this.dataToConvert = Number((this.convertedData * (((this.convertedData * anotherCurrency[0].rate)/(this.convertedData * currentCurrency[0].rate)))).toFixed(3).slice(0, -1))
+        if (currentCurrency !=[]){
+          this.dataToConvert = Number((this.convertedData * anotherCurrency[0].rate).toFixed(3).slice(0, -1))
+        }
+        else{
+          this.dataToConvert = Number((this.convertedData * (((this.convertedData * anotherCurrency[0].rate)/(this.convertedData * currentCurrency[0].rate)))).toFixed(3).slice(0, -1))
+        }
+
       }
     }
   }
 }
-
