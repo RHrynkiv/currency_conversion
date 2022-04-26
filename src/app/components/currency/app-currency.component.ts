@@ -8,13 +8,13 @@ import {ICurrency} from "../../models/ICurrency";
   styleUrls: ["./app-currency.component.css"]
 })
 export class CurrencyComponent implements OnInit {
-  currencyData: ICurrency[];
-  dataToConvert: number;
-  convertedData: number;
-  currencies: Array<string>
-  selectedCurrencyFirst: string
-  selectedCurrencySecond: string
-  Identical:boolean
+  currencyData!: ICurrency[];
+  dataToConvert!: number;
+  convertedData!: number;
+  currencies!: Array<string>
+  selectedCurrencyFirst!: string
+  selectedCurrencySecond!: string
+  Identical!:boolean
 
   constructor(private currencyService: CurrencyService) {
   }
