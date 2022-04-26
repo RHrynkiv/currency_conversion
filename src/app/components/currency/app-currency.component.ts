@@ -8,13 +8,13 @@ import {ICurrency} from "../../models/ICurrency";
   styleUrls: ["./app-currency.component.css"]
 })
 export class CurrencyComponent implements OnInit {
-  currencyData!: ICurrency[];
-  dataToConvert!: number;
-  convertedData!: number;
-  OptionType: any
-  currencies!: Array<string>
-  selectedCurrencyFirst: any
-  selectedCurrencySecond: any
+  currencyData: ICurrency[];
+  dataToConvert: number;
+  convertedData: number;
+  currencies: Array<string>
+  selectedCurrencyFirst: string
+  selectedCurrencySecond: string
+  Identical:boolean
 
   constructor(private currencyService: CurrencyService) {
   }
@@ -30,46 +30,57 @@ export class CurrencyComponent implements OnInit {
   }
 
   private filterData(data: ICurrency[]) {
-    this.currencyData = [{  cc: "UAH",
-      exchangedate: 'string',
-      r030: 1,
-      rate: 0.3,
-      txt: 1},...data.filter((val) => {
+    this.currencyData = data.filter((val) => {
       if (val.cc === 'USD' || val.cc === 'EUR' || val.cc === "UAH") {
         return val;
-
       } else {
         return;
       }
-    })]
+    })
   }
+
 
 
   convertDataFirst() {
     if (this.selectedCurrencyFirst === this.selectedCurrencySecond) {
       this.convertedData = this.dataToConvert
+      this.Identical = true
     } else {
+      this.Identical = false
       if (this.selectedCurrencyFirst === 'UAH' ) {
-        let currentCurrency = this.currencyData.filter(e => e.cc == this.selectedCurrencySecond) || 1
+        let currentCurrency = this.currencyData.filter(e => e.cc == this.selectedCurrencySecond)
         this.convertedData = Number((this.dataToConvert / currentCurrency[0].rate).toFixed(3).slice(0, -1))
       } else {
         let currentCurrency = this.currencyData.filter(e => e.cc == this.selectedCurrencySecond)
         let anotherCurrency = this.currencyData.filter(e => e.cc == this.selectedCurrencyFirst)
-        this.convertedData = Number((this.dataToConvert * (((this.dataToConvert * anotherCurrency[0].rate)/(this.dataToConvert * currentCurrency[0].rate)))).toFixed(3).slice(0, -1))
+        if (!currentCurrency.length){
+          this.convertedData = Number((this.dataToConvert * anotherCurrency[0].rate).toFixed(3).slice(0, -1))
+        }
+        else{
+          this.convertedData = Number((this.dataToConvert * (((this.dataToConvert * anotherCurrency[0].rate)/(this.dataToConvert * currentCurrency[0].rate)))).toFixed(3).slice(0, -1))
+        }
       }
     }
   }
   convertDataSecond() {
     if (this.selectedCurrencyFirst === this.selectedCurrencySecond) {
       this.dataToConvert = this.convertedData
+      this.Identical = true
     } else {
-      if (this.selectedCurrencySecond === 'UAH' ) {
+      this.Identical = false
+      if (this.selectedCurrencySecond === 'UAH'  ) {
         let currentCurrency = this.currencyData.filter(e => e.cc == this.selectedCurrencyFirst)
-        this.dataToConvert = Number((this.convertedData /currentCurrency[0].rate).toFixed(3).slice(0, -1))
+        this.dataToConvert = Number((this.convertedData / currentCurrency[0].rate).toFixed(3).slice(0, -1))
       } else {
         let currentCurrency = this.currencyData.filter(e => e.cc == this.selectedCurrencyFirst)
         let anotherCurrency = this.currencyData.filter(e => e.cc == this.selectedCurrencySecond)
-        this.dataToConvert = Number((this.convertedData * (((this.convertedData * anotherCurrency[0].rate)/(this.convertedData * currentCurrency[0].rate)))).toFixed(3).slice(0, -1))
+        if (!currentCurrency.length){
+          this.dataToConvert = Number((this.convertedData * anotherCurrency[0].rate).toFixed(3).slice(0, -1))
+        }
+       else{
+          this.dataToConvert = Number((this.convertedData * (((this.convertedData * anotherCurrency[0].rate)/(this.convertedData * currentCurrency[0].rate)))).toFixed(3).slice(0, -1))
+        }
+
       }
     }
   }

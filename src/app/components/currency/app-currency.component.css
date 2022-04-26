@@ -1,18 +1,25 @@
 .header{
   width: 400px;
-  height: 50px;
-  border: 1px solid #000;
+  height: 100px;
+  border: 1px solid cornflowerblue;
   padding: 10px 0 0 0;
-  background-color: dimgrey;
-  color: white;
-  border-radius: 10px;
+  color: cornflowerblue;
+  border-radius: 20px;
+  font-family: "fangsong", sans-serif ;
+  font-size: 20px;
+}
+.tittle{
+  font-family: "fangsong", sans-serif ;
+  color: cornflowerblue;
+  font-size: 30px;
+  padding: 5px;
 }
 .conversion{
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 30px;
-  border: 1px solid #000;
+  border: 1px solid cornflowerblue;
   width: 400px;
   height: 200px;
   border-radius: 10px;
@@ -24,9 +31,24 @@
 input{
   margin: 10px;
   width: 250px;
-  height: 20px;
+  height: 30px;
+  border: 1px solid cornflowerblue;
+  color: cornflowerblue;
+  border-radius: 20px;
+  text-align: center;
 }
 select{
   width: 60px;
   height: 30px;
+  border: 1px solid cornflowerblue;
+  color: cornflowerblue;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.info{
+  font-size: 14px;
+  font-family: "fangsong", sans-serif ;
+  height: 30px;
+  color: #ea7474;
 }

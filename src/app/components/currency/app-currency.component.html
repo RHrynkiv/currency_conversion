@@ -1,22 +1,25 @@
 <div class="header">
-  <div>
-    {{currencyData[1].rate}} => {{currencyData[1].cc}}
-  </div>
-  <div>
-    {{currencyData[2].rate}} => {{currencyData[2].cc}}
-  </div>
+  <div class="tittle">Currency converter</div>
+  <span *ngFor="let currency of currencyData">
+      {{currency.cc}} — {{currency.rate}}
+    <br/>
+  </span>
+  <br/>
 </div>
 <div class="conversion">
   <div class="conversion_body">
+    <div  *ngIf="Identical" class="info">
+       Currencies are the same, please choose another one
+    </div>
     <div>
-      <input type="number" (keyup)="convertDataFirst()" [(ngModel)]="dataToConvert"/>
+      <input  type="number" (ngModelChange)="convertDataFirst()" (keyup)="convertDataFirst()" [(ngModel)]="dataToConvert"/>
       <select   [(ngModel)]="selectedCurrencyFirst" (ngModelChange)="convertDataFirst()"  >
         <option  *ngFor="let currency of currencies" [ngValue]="currency">{{currency}}</option>
       </select>
     </div>
 
     <div>
-      <input type="number"  (keyup)="convertDataSecond()" [(ngModel)]="convertedData"/>
+      <input type="number" (ngModelChange)="convertDataSecond()" (keyup)="convertDataSecond()" [(ngModel)]="convertedData"/>
         <select   [(ngModel)]="selectedCurrencySecond" (ngModelChange)="convertDataSecond()"  >
           <option *ngFor="let currency of currencies" [ngValue]="currency">{{currency}}</option>
         </select>
